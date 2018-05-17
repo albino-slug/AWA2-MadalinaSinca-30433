@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventService {
-    public List<Event> findAll();
+    List<Event> findAll();
 
-    public void save(Event event);
+    Boolean save(Event event);
 
-    public void deleteById(Integer id);
+    Boolean deleteById(Integer id);
 
-    public Optional<Event> findById(Integer id);
+    Optional<Event> findById(Integer id);
 
-    public Optional<Event> findByDate(Date date);
+    List<Event> findByDate(Date date);
 
-    public Optional<Event> findByName(String name);
+    List<Event> findByName(String name);
 }

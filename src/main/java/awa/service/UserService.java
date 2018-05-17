@@ -1,18 +1,27 @@
 package awa.service;
 
+import awa.model.Role;
 import awa.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    public List<User> findAll();
 
-    public void save(User user);
+    List<User> findAll();
 
-    public void deleteById(Integer id);
+    Boolean save(User user);
 
-    public Optional<User> findById(Integer id);
+    Boolean deleteById(Integer id);
 
-    public Optional<User> findByEmail(String email);
+    Optional<User> findById(Integer id);
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByRole(Role role);
+
+    Optional<User> findByUsername(String username);
+
+    Optional<User> findByUsernameAndPassword(String username, String password);
+
 }
