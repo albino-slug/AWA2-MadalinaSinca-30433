@@ -8,15 +8,17 @@ import java.util.Optional;
 
 public interface CourseService {
 
-    public List<Course> findAll();
+    List<Course> findAll();
 
-    public Boolean save(Course course);
+    Boolean save(Course course);
 
-    public Boolean deleteById(Integer id);
+    Boolean deleteById(Integer id);
 
-    public Optional<Course> findById(Integer id);
+    Boolean addUserById(Integer courseId, Integer userId);
 
-    public List<Course> findByStartDate(Date date);
+    Optional<Course> findById(Integer id);
 
-    public Optional<Course> findByName(String name);
+    List<Course> findByStartDate(Date date);
+
+    Optional<Course> findByName(String name);
 }

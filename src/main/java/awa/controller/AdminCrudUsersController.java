@@ -1,5 +1,6 @@
 package awa.controller;
 
+import awa.model.Role;
 import awa.model.User;
 import awa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,9 +19,14 @@ public class AdminCrudUsersController {
     private UserService userService;
 
     @RequestMapping(value = "admin_crud_users", method = RequestMethod.GET)
-    public String userIndex(Model model) {
+    public String userIndex(Model model, HttpSession httpSession) {
         model.addAttribute("user", new User());
-        return "admin_crud_users";
+        if (Role.valueOf(httpSession.getAttribute("userRole").toString()) == Role.ADMIN) {
+            return "admin_crud_users";
+        }
+        else {
+            return "redirect:/login";
+        }
     }
 
     private void updateUserList(Model model, List<User> userList) {

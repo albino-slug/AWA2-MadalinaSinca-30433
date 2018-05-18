@@ -1,10 +1,13 @@
 package awa.controller;
 
+import awa.model.Role;
 import awa.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AdminMainViewController {
@@ -12,8 +15,13 @@ public class AdminMainViewController {
     private UserRepo userRepo;
 
     @RequestMapping(value = {"/admin_main_view"}, method = RequestMethod.GET)
-    public String AdminMainViewIndex() {
-        return "admin_main_view";
+    public String adminMainViewIndex(HttpSession httpSession) {
+        if (Role.valueOf(httpSession.getAttribute("userRole").toString()) == Role.ADMIN) {
+            return "admin_main_view";
+        }
+        else{
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping(value = "/admin_main_view", method = RequestMethod.POST, params = "redirect=toAdminCrudUsers")

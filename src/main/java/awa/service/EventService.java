@@ -18,4 +18,6 @@ public interface EventService {
     List<Event> findByDate(Date date);
 
     List<Event> findByName(String name);
+
+    Boolean addUserById(Integer eventId, Integer userId);
 }

@@ -2,6 +2,7 @@ package awa.service;
 
 import awa.model.Course;
 import awa.repository.CourseRepo;
+import awa.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepo courseRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public List<Course> findAll() {
@@ -40,6 +44,30 @@ public class CourseServiceImpl implements CourseService {
                 courseRepo.delete(id);
             }
             catch (Exception e) {
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean addUserById(Integer courseId, Integer userId) {
+        if (courseId.intValue() < 0 || userId.intValue() < 0){
+            return Boolean.FALSE;
+        }
+        else {
+            try {
+                if (courseRepo.findById(courseId).isPresent()){
+                    Course course = courseRepo.findById(courseId).get();
+                    course.enrollUser(userRepo.findById(userId));
+                    courseRepo.save(course);
+                }
+                else {
+                    return Boolean.FALSE;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
                 return Boolean.FALSE;
             }
         }

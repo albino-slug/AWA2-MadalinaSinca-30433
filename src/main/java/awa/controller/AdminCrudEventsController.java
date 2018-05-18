@@ -1,6 +1,8 @@
 package awa.controller;
 
+import awa.model.Course;
 import awa.model.Event;
+import awa.model.Role;
 import awa.model.User;
 import awa.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -18,9 +21,13 @@ public class AdminCrudEventsController {
     private EventService eventService;
 
     @RequestMapping(value = "admin_crud_events", method = RequestMethod.GET)
-    public String eventIndex(Model model) {
+    public String eventIndex(Model model, HttpSession httpSession) {
         model.addAttribute("event", new Event());
-        return "admin_crud_events";
+        if (Role.valueOf(httpSession.getAttribute("userRole").toString()) == Role.ADMIN) {
+            return "admin_crud_events";        }
+        else{
+            return "redirect:/login";
+        }
     }
 
     private void updateEventList(Model model, List<Event> eventList) {

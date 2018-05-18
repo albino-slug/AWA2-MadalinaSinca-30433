@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "courses")
@@ -38,6 +39,8 @@ public class Course {
 
     @ManyToMany(mappedBy = "courses")
     private List<User> users = new ArrayList<User>();
+
+    private static final Integer maxUsers = 15;
 
     public Course(){}
 
@@ -86,6 +89,14 @@ public class Course {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Boolean enrollUser(Optional<User> user){
+        if (users.size() < maxUsers && user.isPresent()){
+            users.add(user.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     @Override

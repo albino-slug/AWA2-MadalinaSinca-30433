@@ -1,6 +1,7 @@
 package awa.controller;
 
 import awa.model.Course;
+import awa.model.Role;
 import awa.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,9 +19,13 @@ public class AdminCrudCoursesController {
     private CourseService courseService;
 
     @RequestMapping(value = "admin_crud_courses", method = RequestMethod.GET)
-    public String courseIndex(Model model) {
+    public String courseIndex(Model model, HttpSession httpSession) {
         model.addAttribute("course", new Course());
-        return "admin_crud_courses";
+        if (Role.valueOf(httpSession.getAttribute("userRole").toString()) == Role.ADMIN) {
+            return "admin_crud_courses";        }
+        else{
+            return "redirect:/login";
+        }
     }
 
     private void updateCourseList(Model model, List<Course> courseList) {

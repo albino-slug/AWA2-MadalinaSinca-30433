@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -20,23 +21,33 @@ public class UserProcessCoursesController {
     private UserService userService;
 
     @RequestMapping(value = "user_process_courses", method = RequestMethod.GET)
-    public String courseIndex(){
+    public String courseIndex(Model model){
+        model.addAttribute("course", new Course());
         return "user_process_courses";
     }
 
     private void updateCourseList(Model model, List<Course> courseList) {
+        model.addAttribute("course", new Course());
         model.addAttribute("courseList", courseList);
     }
 
-    @RequestMapping(value = "/userCourses", method = RequestMethod.POST, params = "action=searchCourseByDate")
-    public String listCourseByDate(@RequestParam("date") Date date, Model model) {
-        updateCourseList(model, courseService.findByStartDate(date));
-        return "user_process_courses";
-    }
-
-    @RequestMapping(value = "/userCourses", method = RequestMethod.POST, params = "action=listAllCourses")
+    @RequestMapping(value = "/user_process_courses", method = RequestMethod.POST, params = "action=listAllCourses")
     public String listAllCourses(Model model){
         updateCourseList(model, courseService.findAll());
         return "user_process_courses";
     }
+
+//    @RequestMapping(value = "/user_process_courses", method = RequestMethod.POST, params = "action=listAllCoursesOfCurrentUser")
+//    public String listAllOwnCourses(Model model){
+//      // TODO ???  updateCourseList(model, courseService.findCoursesByUser(user));
+//        return "user_process_courses";
+//    }
+
+    @RequestMapping(value = "/user_process_courses", method = RequestMethod.POST, params = "action=enrollToCourse")
+    public String enrollToCourse(@RequestParam("id") Integer id, Model model, HttpSession httpSession){
+        courseService.addUserById(id, Integer.parseInt(httpSession.getAttribute("userId").toString()));
+        updateCourseList(model, courseService.findAll());
+        return "user_process_courses";
+    }
+
 }

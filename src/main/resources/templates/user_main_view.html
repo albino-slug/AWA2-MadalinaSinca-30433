@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>dummy</title>
+    <title>User Main View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
+
 <body>
-<h1>
-    <span th:text="${message}"></span>
-</h1>
+<form th:action="@{/user_main_view}" method="post" class="form-horizontal col-sm-6 col-sm-offset-3">
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-10">
+            <button class="btn btn-primary" type="submit" name="redirect" value="toUserEvents">Manage Events</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-10">
+            <button class="btn btn-primary" type="submit" name="redirect" value="toUserCourses">Manage Courses</button>
+        </div>
+    </div>
+
+</form>
 </body>
 </html>

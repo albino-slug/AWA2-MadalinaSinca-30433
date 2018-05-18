@@ -36,6 +36,7 @@ public class LoginController {
         if (user.isPresent()){
 
             httpSession.setAttribute("userRole", user.get().getRole());
+            httpSession.setAttribute("userId", user.get().getId());
             System.out.println("redirect:" + redirectionByRole.get(user.get().getRole()));
             return "redirect:" + redirectionByRole.get(user.get().getRole());
         }

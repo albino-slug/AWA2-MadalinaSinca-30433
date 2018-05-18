@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "events")
@@ -32,6 +33,9 @@ public class Event {
 
     @ManyToMany(mappedBy = "events")
     private List<User> users = new ArrayList<User>();
+
+    private static final Integer maxUsers = 20;
+
 
     public Event(){}
 
@@ -71,6 +75,14 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean userAttend(Optional<User> user){
+        if (users.size() < maxUsers && user.isPresent()){
+            users.add(user.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     @Override

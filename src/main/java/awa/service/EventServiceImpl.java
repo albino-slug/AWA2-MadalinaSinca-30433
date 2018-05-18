@@ -2,6 +2,7 @@ package awa.service;
 
 import awa.model.Event;
 import awa.repository.EventRepo;
+import awa.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import java.util.Optional;
 public class EventServiceImpl implements EventService {
     @Autowired
     private EventRepo eventRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public List<Event> findAll() {
@@ -60,5 +64,29 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> findByName(String name) {
         return eventRepo.findByName(name);
+    }
+
+    @Override
+    public Boolean addUserById(Integer eventId, Integer userId) {
+        if (eventId.intValue() < 0 || userId.intValue() < 0){
+            return Boolean.FALSE;
+        }
+        else {
+            try {
+                if (eventRepo.findById(eventId).isPresent()){
+                    Event event = eventRepo.findById(eventId).get();
+                    event.userAttend(userRepo.findById(userId));
+                    eventRepo.save(event);
+                }
+                else {
+                    return Boolean.FALSE;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
     }
 }
