@@ -37,9 +37,10 @@ public class EventServiceImpl implements EventService {
         }
         else {
             try {
-                eventRepo.deleteById(id);
+                eventRepo.delete(id);
             }
             catch (Exception e) {
+                e.printStackTrace();
                 return Boolean.FALSE;
             }
         }

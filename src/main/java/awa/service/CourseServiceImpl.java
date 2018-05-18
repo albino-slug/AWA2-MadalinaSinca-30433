@@ -37,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
         }
         else {
             try {
-                courseRepo.deleteById(id);
+                courseRepo.delete(id);
             }
             catch (Exception e) {
                 return Boolean.FALSE;

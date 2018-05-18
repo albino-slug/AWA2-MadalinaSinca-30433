@@ -13,7 +13,7 @@ public interface EventRepo extends JpaRepository<Event, Integer> {
 
     List<Event> findAll();
 
-    Boolean deleteById(Integer id);
+//  void deleteById(Integer id);
 
     Optional<Event> findById(Integer id);
 

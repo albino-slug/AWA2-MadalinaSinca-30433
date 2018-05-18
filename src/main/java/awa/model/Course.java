@@ -1,5 +1,7 @@
 package awa.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -20,11 +22,13 @@ public class Course {
 
     @Column
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
     @Column
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 

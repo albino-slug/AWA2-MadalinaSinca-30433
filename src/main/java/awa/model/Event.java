@@ -1,5 +1,7 @@
 package awa.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class Event {
     @Column
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     @Id

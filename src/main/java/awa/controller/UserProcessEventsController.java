@@ -21,7 +21,7 @@ public class UserProcessEventsController {
 
     @RequestMapping(value = "user_process_events", method = RequestMethod.GET)
     public String eventIndex(){
-        return "user_process_events";
+        return "user_crud_events";
     }
 
     private void updateEventList(Model model, List<Event> eventList) {
@@ -31,18 +31,18 @@ public class UserProcessEventsController {
     @RequestMapping(value = "/userEvents", method = RequestMethod.POST, params = "action=searchEventByDate")
     public String listEventByDate(@RequestParam("date") Date date, Model model) {
         updateEventList(model, eventService.findByDate(date));
-        return "user_process_events";
+        return "user_crud_events";
     }
 
     @RequestMapping(value = "/userEvents", method = RequestMethod.POST, params = "action=listAllEvents")
     public String listAllEvents(Model model){
         updateEventList(model, eventService.findAll());
-        return "user_process_events";
+        return "user_crud_events";
     }
 
     @RequestMapping(value = "/userEvents", method = RequestMethod.POST, params = "action=listAllEventsOfCurrentUser")
     public String listAllOwnEvents(Model model){
       // TODO ???  updateEventList(model, eventService.findEventsByUser(user));
-        return "user_process_events";
+        return "user_crud_events";
     }
 }
