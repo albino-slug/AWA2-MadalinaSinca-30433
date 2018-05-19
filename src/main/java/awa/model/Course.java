@@ -99,6 +99,23 @@ public class Course {
         return Boolean.FALSE;
     }
 
+    public void dropUser(Optional<User> user){
+        if (user.isPresent()) {
+            users.remove(user.get());
+        }
+    }
+
+    @Override
+    public boolean equals(Object v) {
+        if (v == null){
+            return false;
+        }
+        if (!(v instanceof Course)) {
+            return false;
+        }
+        return ((Course)v).getId().intValue() == this.getId().intValue();
+    }
+
     @Override
     public String toString() {
         return "Course{" +

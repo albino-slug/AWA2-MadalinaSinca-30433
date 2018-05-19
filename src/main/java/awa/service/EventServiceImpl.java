@@ -77,6 +77,7 @@ public class EventServiceImpl implements EventService {
                     Event event = eventRepo.findById(eventId).get();
                     event.userAttend(userRepo.findById(userId));
                     eventRepo.save(event);
+                    System.out.println("User " + userId + " has been added to event " + eventId);
                 }
                 else {
                     return Boolean.FALSE;
@@ -88,5 +89,29 @@ public class EventServiceImpl implements EventService {
             }
         }
         return Boolean.TRUE;
+    }
+
+    @Override
+    public void removeUserById(Integer eventId, Integer userId){
+        if (eventId.intValue() < 0 || userId.intValue() < 0){
+            return ;
+        }
+        else {
+            try {
+                if (eventRepo.findById(eventId).isPresent()){
+                    Event event = eventRepo.findById(eventId).get();
+                    event.dropUser(userRepo.findById(userId));
+                    eventRepo.save(event);
+                    System.out.println("User " + userId + " has been removed from course " + eventId);
+                }
+                else {
+                    return ;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return ;
+            }
+        }
     }
 }

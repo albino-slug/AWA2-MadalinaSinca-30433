@@ -16,6 +16,8 @@ public interface CourseService {
 
     Boolean addUserById(Integer courseId, Integer userId);
 
+    void removeUserById(Integer courseId, Integer userId);
+
     Optional<Course> findById(Integer id);
 
     List<Course> findByStartDate(Date date);

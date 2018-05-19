@@ -20,4 +20,6 @@ public interface EventService {
     List<Event> findByName(String name);
 
     Boolean addUserById(Integer eventId, Integer userId);
+
+    void removeUserById(Integer eventId, Integer userId);
 }

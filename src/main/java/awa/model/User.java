@@ -6,10 +6,11 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
 
     @Column
     @NotNull
@@ -129,6 +130,43 @@ public class User {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+
+
+    public void addCourseToUser(Optional<Course> course){
+        if (course.isPresent() && !courses.contains(course.get())){
+            courses.add(course.get());
+        }
+    }
+
+    public void addEventToUser(Optional<Event> event){
+        if (event.isPresent() && !events.contains(event.get())){
+            events.add(event.get());
+        }
+    }
+
+    public void dropCourse(Optional<Course> course){
+        if (course.isPresent() && courses.contains(course.get())){
+            courses.remove(course.get());
+        }
+    }
+
+    public void dropEvent(Optional<Event> event){
+        if (event.isPresent() && events.contains(event.get())){
+            events.remove(event.get());
+        }
+    }
+
+    @Override
+    public boolean equals(Object v) {
+        if (v == null){
+            return false;
+        }
+        if (!(v instanceof User)) {
+            return false;
+        }
+        return ((User)v).getId().intValue() == this.getId().intValue();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package awa.service;
 
 import awa.model.Course;
+import awa.model.User;
 import awa.repository.CourseRepo;
 import awa.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class CourseServiceImpl implements CourseService {
                     Course course = courseRepo.findById(courseId).get();
                     course.enrollUser(userRepo.findById(userId));
                     courseRepo.save(course);
+                    System.out.println("User " + userId + " has been added to course " + courseId);
                 }
                 else {
                     return Boolean.FALSE;
@@ -72,6 +74,30 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return Boolean.TRUE;
+    }
+
+    @Override
+    public void removeUserById(Integer courseId, Integer userId){
+        if (courseId.intValue() < 0 || userId.intValue() < 0){
+            return ;
+        }
+        else {
+            try {
+                if (courseRepo.findById(courseId).isPresent()){
+                    Course course = courseRepo.findById(courseId).get();
+                    course.dropUser(userRepo.findById(userId));
+                    courseRepo.save(course);
+                    System.out.println("User " + userId + " has been removed from course " + courseId);
+                }
+                else {
+                    return ;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return ;
+            }
+        }
     }
 
     @Override
